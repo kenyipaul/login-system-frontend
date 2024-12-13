@@ -1,6 +1,25 @@
+import Axios from "axios"
+import { useRef } from "react"
 import { Link } from "react-router-dom"
 
 export default function Login() {
+
+    const passRef = useRef<HTMLInputElement>(null);
+    const emailRef = useRef<HTMLInputElement>(null);
+
+    const login = () => {
+        const email = emailRef.current!.value;
+        const password = passRef.current!.value;
+
+        Axios({
+            method: "POST",
+            url: "http://localhost:3303/api/login",
+            data: { email, password }
+        }).then((response) => {
+            console.log(response.data)
+        })
+    }
+
     return (
         <div className="form-container">
 
@@ -14,16 +33,16 @@ export default function Login() {
                 
                 <div className="input-area">
                     <label htmlFor="email">Email</label>
-                    <input type="email" id="email" />
+                    <input ref={emailRef} type="email" id="email" />
                 </div>
                 
                 <div className="input-area">
                     <label htmlFor="password">Password</label>
-                    <input type="password" id="password" />
+                    <input ref={passRef} type="password" id="password" />
                 </div>
 
                 <p>I don't have an account yet? <Link to="/signup">register here</Link></p>
-                <button>Log In</button>
+                <button onClick={login} type="button">Log In</button>
             </form>
 
         </div>

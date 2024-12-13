@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
 import { useGoogleLogin } from "@react-oauth/google"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import Axios from "axios"
 
 interface ProfileType {
@@ -24,6 +24,10 @@ interface UserType {
 
 export default function Signup() {
 
+    const nameRef = useRef<HTMLInputElement>(null);
+    const emailRef = useRef<HTMLInputElement>(null);
+    const passRef = useRef<HTMLInputElement>(null);
+
     const [user, setUser] = useState<UserType>();
     const [profile, setProfile] = useState<ProfileType>();
 
@@ -44,15 +48,52 @@ export default function Signup() {
                 }
             })
             .then((res) => {
-                // setProfile(res.data);
-                // console.log(res.data)
-                // console.log(user)
-                console.log(res.data)
+                setProfile(res.data);
             })
             .catch((err) => console.log(err));
 
         }
     }, [user])
+
+    useEffect(() => {
+        if (profile) {
+
+            Axios({
+                method: "POST",
+                url: "http://localhost:3303/api/register",
+                data: {
+                    username: profile.name,
+                    email: profile.email,
+                    profile: profile.picture
+                },
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+
+        }
+    }, [profile])
+
+
+    const signup = () => {
+
+        const username = nameRef.current!.value;
+        const email = emailRef.current!.value;
+        const password = passRef.current!.value;
+
+        Axios({
+            method: "POST",
+            url: "http://localhost:3303/api/signup",
+            data: {
+                email: email,
+                password: password,
+                username: username,
+            },
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+    }
 
     return (
         <div className="form-container">
@@ -67,21 +108,21 @@ export default function Signup() {
 
                 <div className="input-area">
                     <label htmlFor="username">Username</label>
-                    <input type="text" id="username" />
+                    <input ref={nameRef} type="text" id="username" />
                 </div>
 
                 <div className="input-area">
                     <label htmlFor="email">Email</label>
-                    <input type="email" id="email" />
+                    <input ref={emailRef} type="email" id="email" />
                 </div>
 
                 <div className="input-area">
                     <label htmlFor="password">Password</label>
-                    <input type="password" id="password" />
+                    <input ref={passRef} type="password" id="password" />
                 </div>
 
                 <p>I already have an account? <Link to="/">login here</Link></p>
-                <button>Proceed</button>
+                <button onClick={signup} type="button">Sign Up</button>
             </form>
 
         </div>

@@ -3,6 +3,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import Signup from "./views/signup"
 import Login from "./views/login"
 import { GoogleOAuthProvider } from "@react-oauth/google"
+import Home from "./views/home"
 
 const router = createBrowserRouter([
     {
@@ -12,6 +13,10 @@ const router = createBrowserRouter([
     {
         path: "/signup",
         element: <Signup />
+    },
+    {
+        path: "/home",
+        element: <Home />
     },
     {
         path: "*",
