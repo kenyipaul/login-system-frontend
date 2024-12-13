@@ -1,0 +1,20 @@
+@font-face {
+    font-family: roboto-condensed;
+    src: url(/assets/fonts/RobotoCondensed-Regular.ttf);
+}
+
+@font-face {
+    font-family: titillium-web;
+    src: url(/assets/fonts/TitilliumWeb-Bold.ttf);
+}
+
+$primary-font: roboto-condensed;
+$secondary-font: titillium-web;
+
+* {
+    margin: 0;
+    padding: 0;
+    scrollbar-width: thin;
+    box-sizing: border-box;
+    font-family: $primary-font, roboto, sans-serif;
+}

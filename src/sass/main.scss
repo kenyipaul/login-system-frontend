@@ -1,0 +1,14 @@
+@use "./global" as *;
+@use "./form" as *;
+
+.notfound {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    h1 {
+        font-family: $secondary-font;
+        font-size: clamp(1.5em, 5vw, 2em);
+    }
+}
