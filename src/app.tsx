@@ -1,3 +1,5 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-expect-error
 import "./sass/main.scss"
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import Signup from "./views/signup"
